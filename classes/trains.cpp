@@ -13,6 +13,34 @@ bool add(std::vector<T1> &list, const T1 &to_add, const int max_capacity) {
     return true;
 }
 
+
+template <class T1>
+bool Wagon<T1>::add(const T1 &to_add) {
+    if(!max_capacity>list.size()){
+        list.push_back(to_add);
+        return true;
+    }
+    return false;
+}
+
+template <class T1>
+void Wagon<T1>::laod( std::vector<T1> &to_load) {
+    while(!to_load.empty() && add(to_load[0]))
+        to_load.erase(to_load.begin());
+}
+
+template <class T1>
+std::vector<T1> Wagon<T1>::unload() {
+    std::vector<T1> to_return;
+    for(int i = 0 ; i < to_return.size() ; i++)
+        if(unload_decision(list[i])){
+            to_return.push_back(list[i]);
+            list.erase(list.begin()+i);
+            i--;
+        }
+    return to_return;
+}
+
 bool Passenger_wagon::add_passenger(const Passenger &to_add) {
     return add(list, to_add, Passenger_wagon::max_capacity);
 }

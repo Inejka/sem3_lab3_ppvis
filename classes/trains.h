@@ -65,6 +65,21 @@ private:
     int pulling_force, life_time;
 };
 
+template <class T1>
+class Wagon{
+public:
+    bool add(const T1 & to_add);
+    void laod(std::vector<T1> &to_load);
+    virtual std::vector<T1> unload();
+private:
+    virtual bool unload_decision(const T1 &make_decision_about) = 0;
+    std::vector<T1> list;
+    int max_capacity;
+    std::string its_type;
+
+};
+
+
 class Passenger_wagon : public Entity_with_weight {
 public:
     Passenger_wagon() { set_its_weight(4000); }
@@ -126,6 +141,7 @@ private:
     std::vector<Passenger_wagon> its_passenger_wagons;
     bool is_on_station = true;
 
+    std::vector<*Wagon> asdfa;
     //    std::vector<int> its_route;
     //    int current_position_on_its_route = 0;
 
