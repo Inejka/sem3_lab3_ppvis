@@ -14,41 +14,26 @@ bool add(std::vector<T1> &list, const T1 &to_add, const int max_capacity) {
 }
 
 
-template <class T1>
+template<class T1>
 bool Wagon<T1>::add(const T1 &to_add) {
-    if(!max_capacity>list.size()){
+    if (max_capacity >= list.size()) {
         list.push_back(to_add);
         return true;
     }
     return false;
 }
 
-template <class T1>
-void Wagon<T1>::laod( std::vector<T1> &to_load) {
-    while(!to_load.empty() && add(to_load[0]))
+template<class T1>
+void Wagon<T1>::laod(std::vector<T1> &to_load) {
+    while (!to_load.empty() && add(to_load[0]))
         to_load.erase(to_load.begin());
 }
 
-template <class T1>
-std::vector<T1> Wagon<T1>::unload() {
+template<class T1>
+std::vector<T1> Wagon<T1>::unload(const int &par) {
     std::vector<T1> to_return;
-    for(int i = 0 ; i < to_return.size() ; i++)
-        if(unload_decision(list[i])){
-            to_return.push_back(list[i]);
-            list.erase(list.begin()+i);
-            i--;
-        }
-    return to_return;
-}
-
-bool Passenger_wagon::add_passenger(const Passenger &to_add) {
-    return add(list, to_add, Passenger_wagon::max_capacity);
-}
-
-std::vector<Passenger> Passenger_wagon::remove_passengers_for_their_dest_point(const int &current_station) {
-    std::vector<Passenger> to_return;
-    for (int i = 0; i < list.size(); i++)
-        if (list[i].check_destination_point(current_station)) {
+    for (int i = 0; i < to_return.size(); i++)
+        if (unload_decision(list[i], par)) {
             to_return.push_back(list[i]);
             list.erase(list.begin() + i);
             i--;
@@ -56,81 +41,72 @@ std::vector<Passenger> Passenger_wagon::remove_passengers_for_their_dest_point(c
     return to_return;
 }
 
-int Passenger_wagon::get_its_weight() {
-    int to_return = its_weight;
-    for (auto &i:list)
+bool Passenger_wagon::unload_decision(const Passenger &make_decision_about, const int &par) {
+    return make_decision_about.check_destination_point(par);
+}
+
+int Passenger_wagon::get_its_weight() const {
+    int to_return = Wagon_p::get_its_weight();
+    for (auto &i:get_list_for_weight())
         to_return += i.get_its_weight();
     return to_return;
 }
 
-bool Freight_wagon::add_Cargo(const Cargo &to_add) {
-    return add(list, to_add, Freight_wagon::max_capacity);
-}
-
-std::vector<Cargo> Freight_wagon::remove_Cargo_by_its_type(const int &type) {
-    std::vector<Cargo> to_return;
-    for (int i = 0; i < list.size(); i++)
-        if (list[i].check_type(type)) {
-            to_return.push_back(list[i]);
-            list.erase(list.begin() + i);
-            i--;
-        }
-    return to_return;
-}
-
-int Freight_wagon::get_its_weight() {
-    int to_return = its_weight;
-    for (auto &i:list)
+int Freight_wagon::get_its_weight() const {
+    int to_return = Wagon_p::get_its_weight();
+    for (auto &i:get_list_for_weight())
         to_return += i.get_its_weight();
     return to_return;
+}
+
+bool Freight_wagon::unload_decision(const Cargo &make_decision_about, const int &par) {
+    return make_decision_about.check_type(par);
 }
 
 void Train::load_passangers(std::vector<Passenger> &passagers) {
-    int in_which_wagon_load = 0;
-    int first_kolvo = passagers.size();
-    while (!passagers.empty() && in_which_wagon_load != its_passenger_wagons.size())
-        if (its_passenger_wagons[in_which_wagon_load].add_passenger(passagers[passagers.size() - 1]))
-            passagers.erase(passagers.end() - 1);
-        else in_which_wagon_load++;
-    std::cout << "Loaded " << first_kolvo - passagers.size() << " passagers\n";
+    for (auto &i : its_wagons) {
+        Passenger_wagon *p_w_p = dynamic_cast<Passenger_wagon *>(i);
+        if (p_w_p)p_w_p->laod(passagers);
+        if (passagers.empty())break;;
+    }
 }
 
 void Train::load_Cargo(std::vector<Cargo> &cargo) {
-    int in_which_wagon_load = 0;
-    int first_kolvo = cargo.size();
-    while (!cargo.empty() && in_which_wagon_load != its_freight_wagons.size())
-        if (its_freight_wagons[in_which_wagon_load].add_Cargo(cargo[cargo.size() - 1]))
-            cargo.erase(cargo.end() - 1);
-        else in_which_wagon_load++;
-    std::cout << "Loaded " << first_kolvo-cargo.size() << " cargos\n";
+    for (auto &i:its_wagons) {
+        Freight_wagon *f_w_p = dynamic_cast<Freight_wagon *>(i);
+        if (f_w_p)f_w_p->laod(cargo);
+        if (cargo.empty())break;
+    }
 }
 
 std::vector<Passenger> Train::unload_passangers_by_their_dest_point(const int &current_station) {
     std::vector<Passenger> tmp;
-    for (auto &i:its_passenger_wagons) {
-        auto tmp1 = i.remove_passengers_for_their_dest_point(current_station);
-        tmp.insert(tmp.end(), tmp1.begin(), tmp1.end());
+    for (auto &i:its_wagons) {
+        Passenger_wagon *p_w_p = dynamic_cast<Passenger_wagon *>(i);
+        if (p_w_p) {
+            auto tmp1 = p_w_p->unload(current_station);
+            tmp.insert(tmp.end(), tmp1.begin(), tmp1.end());
+        }
     }
-    std::cout << "Removed " << tmp.size() << " passangers\n";
     return tmp;
 }
 
 std::vector<Cargo> Train::unload_Cargo_by_type(const int &type) {
     std::vector<Cargo> tmp;
-    for (auto &i:its_freight_wagons) {
-        auto tmp1 = i.remove_Cargo_by_its_type(type);
-        tmp.insert(tmp.end(), tmp1.begin(), tmp1.end());
+    for (auto &i:its_wagons) {
+        Freight_wagon *f_w_p = dynamic_cast<Freight_wagon *>(i);
+        if (f_w_p) {
+            auto tmp1 = f_w_p->unload(type);
+            tmp.insert(tmp.end(), tmp1.begin(), tmp1.end());
+        }
     }
-    std::cout << "Remove " << tmp.size() << " cargos\n";
     return tmp;
 }
 
-int Train::get_its_weight() {
+int Train::get_its_weight() const {
     int to_return = its_weight;
-    for (auto &i:its_freight_wagons)
-        to_return += i.get_its_weight();
-    for (auto &i:its_passenger_wagons)
-        to_return += i.get_its_weight();
+    for (auto &i:its_wagons)
+        to_return += i->get_its_weight();
     return to_return;
 }
 
@@ -139,7 +115,7 @@ bool Train::move(const int &distance, float &percent) {
         float km = (its_locomotive.get_pulling_force() - get_its_weight() / 100);
         if (km > 0)
             percent += km / distance * 100;
-//        std::cout<<distance << ' ' << percent  << ' ' << km << "\n";
+        std::cout<<distance << ' ' << percent  << ' ' << km << "\n";
         if (percent > 100)is_on_station = true;
         return true;
     }

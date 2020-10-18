@@ -60,6 +60,8 @@ struct Load{
                 to_load.its_trains[i].first.first.push_back(tmp2);
            }
         }
+        for(int i = 0 ; i < 2000 ; i++)
+        to_load.its_graph[1].second->add();
         std::cout << "Load completed\n" ;
         file.close();
     }

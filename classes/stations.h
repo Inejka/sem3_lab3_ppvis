@@ -52,7 +52,7 @@ class Passenger_and_Cargo_station : public Cargo_station, public Passenger_stati
 public:
     Passenger_and_Cargo_station(const int &number) : Station(number) {}
     void add() override{
-    //    to_load.push_back(Passenger("ZAMOIDIC",0,75));
+    //  to_load.push_back(Passenger("ZAMOIDIC",0,75));
     }
     bool progress(Train &,bool &mode) override;
 };
