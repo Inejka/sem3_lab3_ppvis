@@ -6,19 +6,27 @@
 #define SEM3_LAB3_PPVIS_GAME_FIELD_H
 
 #include "stations.h"
+#include <iostream>
+
 class Game_field {
 public:
-    Game_field(bool mode):its_mode(mode){}
+    Game_field() {}
+
     void simulate();
+
+    bool empty() const { return its_trains.empty(); }
+
     friend class Load;
+
     friend class Check;
+
+
 private:
+
+    int *game_mode_select();
     bool its_mode;
-    int find_distance_between(int first,int second);
-    //(     вектор из пар - следующая станция,расстояние до неё , станция   )
-    std::vector<std::pair<std::vector<std::pair<int, int>>, Station *>> its_graph;
-    //((вектор состоящий из маршрута поезда,(текущая станция,процент прохождения расстояния)) , поезд)
-    std::vector<std::pair<std::pair<std::vector<int>, std::pair<int, float>>, Train *>> its_trains;
+    std::vector<Station *> its_stations;
+    std::vector<Train> its_trains;
 };
 
 #endif //SEM3_LAB3_PPVIS_GAME_FIELD_H

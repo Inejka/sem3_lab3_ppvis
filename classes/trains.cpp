@@ -32,7 +32,7 @@ void Wagon<T1>::laod(std::vector<T1> &to_load) {
 template<class T1>
 std::vector<T1> Wagon<T1>::unload(const int &par) {
     std::vector<T1> to_return;
-    for (int i = 0; i < to_return.size(); i++)
+    for (int i = 0; i < list.size(); i++)
         if (unload_decision(list[i], par)) {
             to_return.push_back(list[i]);
             list.erase(list.begin() + i);
@@ -110,14 +110,24 @@ int Train::get_its_weight() const {
     return to_return;
 }
 
-bool Train::move(const int &distance, float &percent) {
+bool Train::move(const int &distance) {
     if (its_locomotive.create_pulling_force()) {
         float km = (its_locomotive.get_pulling_force() - get_its_weight() / 100);
         if (km > 0)
-            percent += km / distance * 100;
-        std::cout<<distance << ' ' << percent  << ' ' << km << "\n";
-        if (percent > 100)is_on_station = true;
+            progress += km / distance * 100;
+        //std::cout<<distance << ' ' << progress  << ' ' << km << "\n";
+        if (progress > 100) {
+            progress = 0 ;
+            is_on_station = true;
+            current_position_on_its_route = (current_position_on_its_route + 1) % its_route.size();
+        }
         return true;
     }
     return false;
+}
+
+int Train::get_next_station() const {
+    if (current_position_on_its_route != its_route.size())
+        return its_route[current_position_on_its_route + 1];
+    else return its_route[0];
 }

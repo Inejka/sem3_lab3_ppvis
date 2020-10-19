@@ -5,29 +5,37 @@
 #include "game_field.h"
 #include <iostream>
 
-void Game_field::simulate() {
-    for (int i = 0; i < its_trains.size(); i++)
-        if (its_trains[i].second->if_on_station())
-            its_graph[its_trains[i].first.second.first].second->progress(*its_trains[i].second, its_mode);
-        else if (its_trains[i].second->move(
-                find_distance_between(its_trains[i].first.first[its_trains[i].first.second.first],
-                                      its_trains[i].first.first[(its_trains[i].first.second.first + 1) %
-                                                                its_trains[i].first.first.size()]),
-                its_trains[i].first.second.second)) {
-            if (its_trains[i].first.second.second > 100) {
-                its_trains[i].first.second.second = 0;
-                its_trains[i].first.second.first =
-                        (its_trains[i].first.second.first + 1) % its_trains[i].first.first.size();
-
-                std::cout << "Train number " << i << " has arrived to "
-                          << its_trains[i].first.first[its_trains[i].first.second.first] << " station\n";
-            }
-        } else {
-
-        }
+int passive_mode(){
+    return 2;
 }
 
-int Game_field::find_distance_between(int first, int second) {
-    for (int i = 0; i < its_graph[first].first.size(); i++)
-        if (its_graph[first].first[i].first == second)return its_graph[first].first[i].second;
+int active_mode() {
+    std::cout << "Choose option : 0-load,1-unload,2-load\\unload,other-do nothing ";
+    int ch;
+    std::cin >> ch;
+    return ch;
+}
+
+void Game_field::simulate() {
+    int (*choice)();
+    if(its_mode)choice=passive_mode;else choice=active_mode;
+    for (int i = 0; i < its_trains.size(); i++) {
+        if (its_trains[i].if_on_station()) {
+            if (its_stations[its_trains[i].get_current_station()]->progress(its_trains[i],
+                                                                            choice)) {
+                auto j = its_stations[its_trains[i].get_current_station()]->get_delta();
+                for (auto &i : j)
+                    std::cout << i.operation_type << i.kolvo << i.type_type;
+            }
+        } else if (!its_trains[i].move(
+                its_stations[its_trains[i].get_current_station()]->get_distance(
+                        its_trains[i].get_next_station()))) {
+            its_trains.erase(its_trains.begin() + i);
+        } else if (its_trains[i].if_on_station()) {
+            std::cout << "Train number " << i << " has arrived to " << its_trains[i].get_current_station()
+                      << " station\n";
+        }
+    }
+    for (auto &i : its_stations)
+        i->progress_to_spawn();
 }

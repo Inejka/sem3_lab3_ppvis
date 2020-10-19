@@ -7,11 +7,10 @@
 using namespace std;
 
 int main(){
-    Game_field i_love_trains(false);
-    Load("name")(i_love_trains);
-    Check()(i_love_trains);
-    while (true){
-        this_thread::sleep_for(chrono::microseconds(2000));
+    Game_field i_love_trains;
+    if(Load().load_game_field("name",i_love_trains) && Check().check_game_field(i_love_trains))
+    while (!i_love_trains.empty()){
+        //this_thread::sleep_for(chrono::microseconds(2000));
         i_love_trains.simulate();
     }
 }

@@ -7,54 +7,152 @@
 
 #include "trains.h"
 
+struct Info {
+    Info(std::string operation_type, int kolvo, std::string type_type) : operation_type(operation_type), kolvo(kolvo),
+                                                                         type_type(type_type) {}
+
+    std::string operation_type, type_type;
+    int kolvo;
+};
+
 class Station {
 public:
-    Station(const int &number) : its_number(number) {}
+    Station(const int &number, std::vector<std::pair<int, int>> its_connections) : its_number(number),
+                                                                                   its_connections(its_connections) {}
 
-    virtual bool progress(Train &,bool &mode) = 0;
+    virtual bool progress(Train &, int mode()) = 0;
 
-    virtual void add() = 0 ;
+    int get_distance(const int &to_station) const;
+
+    virtual void clear_unloaded() = 0;
+
+    virtual std::vector<Info> get_delta() = 0;
+
+    virtual void progress_to_spawn() {
+        time++;
+        if (time == 100) {
+            spawn();
+            time = 0;
+        }
+    }
+
 protected:
-    Station(){}
+    virtual void spawn() = 0;
+
+    Station() {}
+
+    // stations\weight
+    std::vector<std::pair<int, int>> its_connections;
     int time = 0, its_number;
 };
 
 class Passenger_station : virtual public Station {
 public:
-    Passenger_station(const int &number) : Station(number) {}
-
-    bool progress(Train &,bool &mode) override;
-
-    void add() override{
-        to_load.push_back(Passenger("ZAMOIDICK",0,75));
+    std::vector<Info> get_delta() override {
+        auto tmp = its_delta;
+        its_delta.clear();
+        return tmp;
     }
 
+    void clear_unloaded() override {
+        unloaded.clear();
+    }
+
+    Passenger_station(const int &number, std::vector<std::pair<int, int>> its_connections,
+                      std::vector<Passenger> to_spawn) : Station(number, its_connections), to_spawn(to_spawn) {}
+
+    bool progress(Train &, int mode()) override;
+
+
 protected:
-    Passenger_station(){}
-    std::vector<Passenger> to_load, to_transit;
+
+    void load_passanger(Train &to_process);
+
+    void unload_passanger(Train &to_process);
+
+    void spawn() override {
+        to_load.insert(to_load.end(), to_spawn.begin(), to_spawn.end());
+    }
+
+    Passenger_station(std::vector<Passenger> to_spawn) : to_spawn(to_spawn) {}
+
+    std::vector<Info> its_delta;
+
+    std::vector<Passenger> to_load, to_spawn, unloaded;
 };
 
 class Cargo_station : virtual public Station {
 public:
-    Cargo_station(const int &number) : Station(number) {}
 
-    bool progress(Train &,bool &mode) override;
-    void add() override{
-     //   to_load.push_back(Passenger("ZAMOIDICK",0,75));
+    std::vector<Info> get_delta() override {
+        auto tmp = its_delta;
+        its_delta.clear();
+        return tmp;
     }
+
+    void clear_unloaded() override {
+        unloaded.clear();
+    }
+
+    Cargo_station(const int &number, std::vector<std::pair<int, int>> its_connections,
+                  const int &type_is_needed, std::vector<Cargo> to_spawn) : Station(number, its_connections),
+                                                                            to_spawn(to_spawn),
+                                                                            type_is_needed(type_is_needed) {}
+
+    bool progress(Train &, int mode()) override;
+
 protected:
-    Cargo_station(){}
-    std::vector<Cargo> to_load;
+    Cargo_station(std::vector<Cargo> to_spawn, const int &type_is_needed) : to_spawn(to_spawn),
+                                                                            type_is_needed(type_is_needed) {}
+
+    void load_cargo(Train &to_process);
+
+    void unload_cargo(Train &to_process);
+
+    void spawn() override {
+        to_load.insert(to_load.end(), to_spawn.begin(), to_spawn.end());
+    }
+
+    std::vector<Cargo> to_load, to_spawn, unloaded;
+    std::vector<Info> its_delta;
     int type_is_needed;
 };
 
 class Passenger_and_Cargo_station : public Cargo_station, public Passenger_station {
 public:
-    Passenger_and_Cargo_station(const int &number) : Station(number) {}
-    void add() override{
-    //  to_load.push_back(Passenger("ZAMOIDIC",0,75));
+
+    std::vector<Info> get_delta() override {
+        auto tmp = Cargo_station::its_delta;
+        Cargo_station::its_delta.clear();
+        tmp.insert(tmp.end(), Cargo_station::its_delta.begin(), Cargo_station::its_delta.end());
+        Cargo_station::its_delta.clear();
+        return tmp;
     }
-    bool progress(Train &,bool &mode) override;
+
+    void clear_unloaded() override {
+        Passenger_station::unloaded.clear();
+        Cargo_station::unloaded.clear();
+    }
+
+    Passenger_and_Cargo_station(const int &number, std::vector<std::pair<int, int>> its_connections,
+                                std::vector<Passenger> to_spawn_passanger,
+                                const int &type_is_neeeded, std::vector<Cargo> to_spawn_cargo) : Station(number,
+                                                                                                         its_connections),
+                                                                                                 Passenger_station(
+                                                                                                         to_spawn_passanger),
+                                                                                                 Cargo_station(
+                                                                                                         to_spawn_cargo,
+                                                                                                         type_is_neeeded) {}
+
+    bool progress(Train &, int mode()) override;
+
+protected:
+    void spawn() override {
+        Passenger_station::to_load.insert(Passenger_station::to_load.end(), Passenger_station::to_spawn.begin(),
+                                          Passenger_station::to_spawn.end());
+        Cargo_station::to_load.insert(Cargo_station::to_load.end(), Cargo_station::to_spawn.begin(),
+                                      Cargo_station::to_spawn.end());
+    }
 };
 
 

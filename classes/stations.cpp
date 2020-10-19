@@ -5,33 +5,27 @@
 #include "stations.h"
 #include <iostream>
 
-int operattion_type(bool &mode){
-    if(mode)return 2;
-    else {
-        std::cout << "0-load,1-unload,2-load\\unload,other-wait\n";
-        int tmp;
-        std::cin >> tmp;
-        return tmp;
-    }
+int Station::get_distance(const int &to_station) const {
+    for (auto &i : its_connections)
+        if (i.first == to_station)return i.second;
+    return -1;
 }
 
-bool Passenger_station::progress(Train &to_process,bool &mode) {
-    time++;
-    if(time==60){
-        time = 0;
-        switch (operattion_type(mode)) {
-            case 0:
-                to_process.load_passangers(to_load);
+bool Passenger_station::progress(Train &to_process,  int mode()) {
+    to_process.progress++;
+    if (to_process.progress == 60) {
+        to_process.progress = 0;
+        switch (mode()) {
+            case 0: {
+                load_passanger(to_process);
                 break;
+            }
             case 1:
-                to_process.unload_passangers_by_their_dest_point(its_number);
+                unload_passanger(to_process);
                 break;
             case 2:
-                to_process.load_passangers(to_load);
-                to_process.unload_passangers_by_their_dest_point(its_number);
-                break;
-            case 4:
-                //to_transit=to_process.unload_passangers_by_their_dest_point(); reserve for transt
+                load_passanger(to_process);
+                unload_passanger(to_process);
                 break;
         }
         to_process.make_move();
@@ -40,19 +34,35 @@ bool Passenger_station::progress(Train &to_process,bool &mode) {
     return false;
 }
 
-bool Cargo_station::progress(Train &to_process,bool &mode) {
-    time++;
-    if(time==30){
-        switch (operattion_type(mode)) {
+void Passenger_station::load_passanger(Train &to_process) {
+    int buffer = to_load.size();
+    to_process.load_passangers(to_load);
+    if (buffer - to_load.size() != 0)
+        its_delta.push_back(Info("loaded ", buffer - to_load.size(), " passangers\n"));
+}
+
+void Passenger_station::unload_passanger(Train &to_process) {
+    int buffer = unloaded.size();
+    auto tmp = to_process.unload_passangers_by_their_dest_point(its_number);
+    unloaded.insert(unloaded.begin(), tmp.begin(), tmp.end());
+    if (unloaded.size() - buffer != 0)
+        its_delta.push_back(Info("unloaded ", unloaded.size() - buffer, " passangers\n"));
+}
+
+bool Cargo_station::progress(Train &to_process, int mode()) {
+    to_process.progress++;
+    if (to_process.progress == 120) {
+        to_process.progress = 0;
+        switch (mode()) {
             case 0:
-                to_process.load_Cargo(to_load);
+                load_cargo(to_process);
                 break;
             case 1:
-                to_process.unload_Cargo_by_type(0);
+                unload_cargo(to_process);
                 break;
             case 2:
-                to_process.load_Cargo(to_load);
-                to_process.unload_Cargo_by_type(0);
+                load_cargo(to_process);
+                unload_cargo(to_process);
                 break;
         }
         to_process.make_move();
@@ -61,27 +71,40 @@ bool Cargo_station::progress(Train &to_process,bool &mode) {
     return false;
 }
 
-bool Passenger_and_Cargo_station::progress(Train &to_process,bool &mode) {
-    time++;
-    if(time==120){
-        time=0;
-        switch (operattion_type(mode)) {
+void Cargo_station::unload_cargo(Train &to_process) {
+    int buffer = to_load.size();
+    to_process.load_Cargo(to_load);
+    if (buffer - to_load.size() != 0)
+        its_delta.push_back(Info("loaded ", buffer - to_load.size(), " cargos\n"));
+
+}
+
+void Cargo_station::load_cargo(Train &to_process) {
+    int buffer = unloaded.size();
+    auto tmp = to_process.unload_Cargo_by_type(type_is_needed);
+    unloaded.insert(unloaded.end(), tmp.begin(), tmp.end());
+    if (unloaded.size() - buffer != 0)
+        its_delta.push_back(Info("unloaded ", unloaded.size() - buffer, " cargos\n"));
+}
+
+bool Passenger_and_Cargo_station::progress(Train &to_process, int mode()) {
+    to_process.progress++;
+    if (to_process.progress == 240) {
+        to_process.progress = 0;
+        switch (mode()) {
             case 0:
-                to_process.load_passangers(Passenger_station::to_load);
-                to_process.load_Cargo(Cargo_station::to_load);
+                load_passanger(to_process);
+                load_cargo(to_process);
                 break;
             case 1:
-                to_process.unload_passangers_by_their_dest_point(its_number);
-                to_process.unload_Cargo_by_type(type_is_needed);
+                unload_cargo(to_process);
+                unload_passanger(to_process);
                 break;
             case 2:
-                to_process.load_passangers(Passenger_station::to_load);
-                to_process.load_Cargo(Cargo_station::to_load);
-                to_process.unload_passangers_by_their_dest_point(its_number);
-                to_process.unload_Cargo_by_type(type_is_needed);
-                break;
-            case 4:
-               // to_transit=to_process.unload_passangers_by_their_dest_point()
+                load_passanger(to_process);
+                load_cargo(to_process);
+                unload_cargo(to_process);
+                unload_passanger(to_process);
                 break;
         }
         to_process.make_move();
