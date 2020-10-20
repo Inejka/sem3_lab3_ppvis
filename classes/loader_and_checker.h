@@ -22,11 +22,11 @@ enum Error {
 
 class Load {
 public:
-    bool load_game_field(std::string load_from, Game_field &to_load);
+    bool load_game_field(std::string load_from, Game_field &to_load,const int &its_mode);
 
 private:
 
-    Train load_train(std::fstream &file);
+    Train load_train(std::fstream &file,const int &its_number);
 
     std::vector<int> load_route(std::fstream &file);
 

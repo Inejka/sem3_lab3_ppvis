@@ -35,7 +35,7 @@ std::vector<std::pair<int, int>> Load::load_connections(std::fstream &file) {
 }
 
 std::vector<Cargo> Load::load_to_spawn_cargo(std::fstream &file) {
-    int kolvo1;
+    int kolvo1=load_int(file);
     std::vector<Cargo> to_return;
     for (int j = 0; j < kolvo1; j++) {
         int type = load_int(file), weight = load_int(file);
@@ -83,9 +83,9 @@ Station *Load::load_station(std::fstream &file, const int &its_number) {
     }
 }
 
-Train Load::load_train(std::fstream &file) {
+Train Load::load_train(std::fstream &file,const int &its_number) {
     int lifetime = load_int(file), pulling_force = load_int(file), f_w_c = load_int(file), p_w_c = load_int(file);
-    return Train(lifetime, pulling_force, f_w_c, p_w_c, load_route(file));
+    return Train(lifetime, pulling_force, f_w_c, p_w_c, load_route(file),its_number);
 }
 
 std::vector<int> Load::load_route(std::fstream &file) {
@@ -96,21 +96,19 @@ std::vector<int> Load::load_route(std::fstream &file) {
     return to_return;
 }
 
-bool Load::load_game_field(std::string load_from, Game_field &to_load) {
+bool Load::load_game_field(std::string load_from, Game_field &to_load,const int &its_mode) {
     try {
         std::fstream file;
         file.open(load_from);
         if (!file.is_open())throw load_file_error;
         int kolvo = load_int(file);
-        if (kolvo != 0 && kolvo != 1)throw game_mode_error;
-        else to_load.its_mode = (bool) kolvo;
-        kolvo = load_int(file);
+        if (its_mode != 0 && its_mode != 1)throw game_mode_error;
+        else to_load.its_mode = (bool) its_mode;
         for (int i = 0; i < kolvo; i++)
             to_load.its_stations.push_back(load_station(file, i));
         kolvo = load_int(file);
         for (int i = 0; i < kolvo; i++)
-            to_load.its_trains.push_back(load_train(file));
-
+            to_load.its_trains.push_back(load_train(file,i));
         file.close();
     }
     catch (Error error) {
@@ -158,6 +156,7 @@ void Check::check_connections(Game_field &to_check) {
     for(auto &i : to_check.its_trains){
         auto i_route = i.get_its_route() ;
         for(int j = 0 ; j < i_route.size() - 1 ; j++) {
+            if(i_route[j]>=to_check.its_stations.size())throw connections_error;
             int tmp = to_check.its_stations[i_route[j]]->get_distance(i_route[j+1]);
             if (tmp ==-1 || tmp == 0 )throw connections_error;
         }

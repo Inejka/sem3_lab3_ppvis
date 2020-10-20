@@ -16,7 +16,7 @@ bool add(std::vector<T1> &list, const T1 &to_add, const int max_capacity) {
 
 template<class T1>
 bool Wagon<T1>::add(const T1 &to_add) {
-    if (max_capacity >= list.size()) {
+    if (max_capacity > list.size()) {
         list.push_back(to_add);
         return true;
     }
@@ -24,7 +24,7 @@ bool Wagon<T1>::add(const T1 &to_add) {
 }
 
 template<class T1>
-void Wagon<T1>::laod(std::vector<T1> &to_load) {
+void Wagon<T1>::load(std::vector<T1> &to_load) {
     while (!to_load.empty() && add(to_load[0]))
         to_load.erase(to_load.begin());
 }
@@ -46,14 +46,14 @@ bool Passenger_wagon::unload_decision(const Passenger &make_decision_about, cons
 }
 
 int Passenger_wagon::get_its_weight() const {
-    int to_return = Wagon_p::get_its_weight();
+    int to_return = Base_wagon::get_its_weight();
     for (auto &i:get_list_for_weight())
         to_return += i.get_its_weight();
     return to_return;
 }
 
 int Freight_wagon::get_its_weight() const {
-    int to_return = Wagon_p::get_its_weight();
+    int to_return = Base_wagon::get_its_weight();
     for (auto &i:get_list_for_weight())
         to_return += i.get_its_weight();
     return to_return;
@@ -66,15 +66,15 @@ bool Freight_wagon::unload_decision(const Cargo &make_decision_about, const int 
 void Train::load_passangers(std::vector<Passenger> &passagers) {
     for (auto &i : its_wagons) {
         Passenger_wagon *p_w_p = dynamic_cast<Passenger_wagon *>(i);
-        if (p_w_p)p_w_p->laod(passagers);
+        if (p_w_p)p_w_p->load(passagers);
         if (passagers.empty())break;;
     }
 }
 
-void Train::load_Cargo(std::vector<Cargo> &cargo) {
+void Train::load_cargo(std::vector<Cargo> &cargo) {
     for (auto &i:its_wagons) {
         Freight_wagon *f_w_p = dynamic_cast<Freight_wagon *>(i);
-        if (f_w_p)f_w_p->laod(cargo);
+        if (f_w_p)f_w_p->load(cargo);
         if (cargo.empty())break;
     }
 }
@@ -91,7 +91,7 @@ std::vector<Passenger> Train::unload_passangers_by_their_dest_point(const int &c
     return tmp;
 }
 
-std::vector<Cargo> Train::unload_Cargo_by_type(const int &type) {
+std::vector<Cargo> Train::unload_cargo_by_type(const int &type) {
     std::vector<Cargo> tmp;
     for (auto &i:its_wagons) {
         Freight_wagon *f_w_p = dynamic_cast<Freight_wagon *>(i);
@@ -127,7 +127,7 @@ bool Train::move(const int &distance) {
 }
 
 int Train::get_next_station() const {
-    if (current_position_on_its_route != its_route.size())
+    if (current_position_on_its_route != its_route.size()-1)
         return its_route[current_position_on_its_route + 1];
     else return its_route[0];
 }

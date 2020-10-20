@@ -73,7 +73,7 @@ bool Cargo_station::progress(Train &to_process, int mode()) {
 
 void Cargo_station::unload_cargo(Train &to_process) {
     int buffer = to_load.size();
-    to_process.load_Cargo(to_load);
+    to_process.load_cargo(to_load);
     if (buffer - to_load.size() != 0)
         its_delta.push_back(Info("loaded ", buffer - to_load.size(), " cargos\n"));
 
@@ -81,7 +81,7 @@ void Cargo_station::unload_cargo(Train &to_process) {
 
 void Cargo_station::load_cargo(Train &to_process) {
     int buffer = unloaded.size();
-    auto tmp = to_process.unload_Cargo_by_type(type_is_needed);
+    auto tmp = to_process.unload_cargo_by_type(type_is_needed);
     unloaded.insert(unloaded.end(), tmp.begin(), tmp.end());
     if (unloaded.size() - buffer != 0)
         its_delta.push_back(Info("unloaded ", unloaded.size() - buffer, " cargos\n"));

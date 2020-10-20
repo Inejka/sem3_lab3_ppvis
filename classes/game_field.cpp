@@ -32,7 +32,7 @@ void Game_field::simulate() {
                         its_trains[i].get_next_station()))) {
             its_trains.erase(its_trains.begin() + i);
         } else if (its_trains[i].if_on_station()) {
-            std::cout << "Train number " << i << " has arrived to " << its_trains[i].get_current_station()
+            std::cout << "Train number " << its_trains[i].get_its_number() << " has arrived to " << its_trains[i].get_current_station()
                       << " station\n";
         }
     }

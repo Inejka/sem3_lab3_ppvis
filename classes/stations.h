@@ -122,8 +122,8 @@ class Passenger_and_Cargo_station : public Cargo_station, public Passenger_stati
 public:
 
     std::vector<Info> get_delta() override {
-        auto tmp = Cargo_station::its_delta;
-        Cargo_station::its_delta.clear();
+        auto tmp = Passenger_station::its_delta;
+        Passenger_station   ::its_delta.clear();
         tmp.insert(tmp.end(), Cargo_station::its_delta.begin(), Cargo_station::its_delta.end());
         Cargo_station::its_delta.clear();
         return tmp;

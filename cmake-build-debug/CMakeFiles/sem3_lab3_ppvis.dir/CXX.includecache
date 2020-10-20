@@ -6,11 +6,21 @@
 
 #IncludeRegexTransform: 
 
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/game_field.cpp
+game_field.h
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/game_field.h
+iostream
+-
+
 /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/game_field.h
 stations.h
 /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/stations.h
 iostream
 -
+
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/loader_and_checker.cpp
+loader_and_checker.h
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/loader_and_checker.h
 
 /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/loader_and_checker.h
 game_field.h
@@ -24,9 +34,21 @@ fstream
 string
 -
 
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/stations.cpp
+stations.h
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/stations.h
+iostream
+-
+
 /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/stations.h
 trains.h
 /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/trains.h
+
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/trains.cpp
+trains.h
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/trains.h
+iostream
+-
 
 /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/trains.h
 vector
@@ -35,10 +57,6 @@ string
 -
 
 /home/inejka/CLionProjects/sem3_lab3_ppvis/main.cpp
-iostream
--
-vector
--
 chrono
 -
 thread

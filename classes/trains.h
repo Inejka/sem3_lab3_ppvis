@@ -48,8 +48,8 @@ private:
 
 class Locomotive : Entity_with_weight {
 public:
-    Locomotive(int r_pulling_force, int r_life_time) : pulling_force(r_pulling_force),
-                                                       life_time(r_life_time) { its_weight = 1500; }
+    Locomotive(int pulling_force, int life_time) : pulling_force(pulling_force),
+                                                       life_time(life_time) { its_weight = 1500; }
 
     int get_pulling_force() const { return pulling_force; }
 
@@ -65,9 +65,9 @@ private:
     int pulling_force, life_time;
 };
 
-class Wagon_p : public Entity_with_weight {
+class Base_wagon : public Entity_with_weight {
 public:
-    Wagon_p(const int &weight) { set_its_weight(weight); }
+    Base_wagon(const int &weight) { set_its_weight(weight); }
 
     virtual std::string get_its_type() = 0;
 
@@ -77,15 +77,15 @@ public:
 };
 
 template<class T1>
-class Wagon : public Wagon_p {
+class Wagon : public Base_wagon {
 public:
-    Wagon(const int &max_capacity, std::string its_type, const int &weight) : Wagon_p(weight),
+    Wagon(const int &max_capacity, std::string its_type, const int &weight) : Base_wagon(weight),
                                                                               max_capacity(max_capacity),
                                                                               its_type(its_type) {}
 
     bool add(const T1 &to_add);
 
-    void laod(std::vector<T1> &to_load);
+    void load(std::vector<T1> &to_load);
 
     virtual std::vector<T1> unload(const int &par);
 
@@ -129,22 +129,24 @@ protected:
 class Train : Entity_with_weight {
 public:
     Train(int locomotive_lifetime, int locomotive_pulling_force, int freight_wagons_count,
-          int passenger_wagons_count, std::vector<int> its_route) : its_route(its_route),
+          int passenger_wagons_count, std::vector<int> its_route, const int &its_number) : its_route(its_route),
                                                                     its_locomotive(locomotive_pulling_force,
-                                                                                   locomotive_lifetime) {
+                                                                                   locomotive_lifetime),its_number(its_number) {
         for (int i = 0; i < freight_wagons_count; i++)
             its_wagons.push_back(new Freight_wagon);
         for (int i = 0; i < passenger_wagons_count; i++)
             its_wagons.push_back(new Passenger_wagon);
     }
 
+    int get_its_number()const{return its_number;}
+
     void load_passangers(std::vector<Passenger> &passagers);
 
-    void load_Cargo(std::vector<Cargo> &Cargo);
+    void load_cargo(std::vector<Cargo> &Cargo);
 
     std::vector<Passenger> unload_passangers_by_their_dest_point(const int &current_station);
 
-    std::vector<Cargo> unload_Cargo_by_type(const int &type);
+    std::vector<Cargo> unload_cargo_by_type(const int &type);
 
     int get_its_weight() const override;
 
@@ -163,10 +165,10 @@ public:
     const std::vector<int>get_its_route(){return its_route;}
 private:
     Locomotive its_locomotive;
-    std::vector<Wagon_p *> its_wagons;
+    std::vector<Base_wagon *> its_wagons;
     bool is_on_station = true;
     std::vector<int> its_route;
-    int current_position_on_its_route = 0;
+    int current_position_on_its_route = 0 , its_number;
 
 };
 
