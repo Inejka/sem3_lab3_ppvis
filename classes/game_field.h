@@ -7,6 +7,7 @@
 
 #include "stations.h"
 #include <iostream>
+#include <map>
 
 class Game_field {
 public:
@@ -14,19 +15,29 @@ public:
 
     void simulate();
 
-    bool empty() const { return its_trains.empty(); }
+    bool empty() const {
+        for (int i = 0; i < alive_trains.size(); i++)if (alive_trains[i])return false;
+        return true;
+    }
 
     friend class Load;
 
     friend class Check;
 
+    void print_log(){
+        for(auto &i:log)
+            std::cout << i.operation_type << i.quantity << i.type_type;
+        log.clear();
+    }
+
 
 private:
-
-    int *game_mode_select();
-    bool its_mode;
-    std::vector<Station *> its_stations;
-    std::vector<Train> its_trains;
+    std::vector<Info> log;
+    std::map<std::pair<std::string, std::string>, int> connections;
+    bool mode;
+    std::map<std::string, Station *> stations;
+    std::vector<Train> trains;
+    std::vector<bool> alive_trains;
 };
 
 #endif //SEM3_LAB3_PPVIS_GAME_FIELD_H

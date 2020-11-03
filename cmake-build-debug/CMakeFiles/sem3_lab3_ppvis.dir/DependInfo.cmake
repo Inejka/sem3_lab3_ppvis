@@ -4,8 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Checker.cpp" "/home/inejka/CLionProjects/sem3_lab3_ppvis/cmake-build-debug/CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.o"
+  "/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Error.cpp" "/home/inejka/CLionProjects/sem3_lab3_ppvis/cmake-build-debug/CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.o"
+  "/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Loader.cpp" "/home/inejka/CLionProjects/sem3_lab3_ppvis/cmake-build-debug/CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.o"
   "/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/game_field.cpp" "/home/inejka/CLionProjects/sem3_lab3_ppvis/cmake-build-debug/CMakeFiles/sem3_lab3_ppvis.dir/classes/game_field.cpp.o"
-  "/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/loader_and_checker.cpp" "/home/inejka/CLionProjects/sem3_lab3_ppvis/cmake-build-debug/CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.o"
   "/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/stations.cpp" "/home/inejka/CLionProjects/sem3_lab3_ppvis/cmake-build-debug/CMakeFiles/sem3_lab3_ppvis.dir/classes/stations.cpp.o"
   "/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/trains.cpp" "/home/inejka/CLionProjects/sem3_lab3_ppvis/cmake-build-debug/CMakeFiles/sem3_lab3_ppvis.dir/classes/trains.cpp.o"
   "/home/inejka/CLionProjects/sem3_lab3_ppvis/main.cpp" "/home/inejka/CLionProjects/sem3_lab3_ppvis/cmake-build-debug/CMakeFiles/sem3_lab3_ppvis.dir/main.cpp.o"

@@ -8,21 +8,19 @@
 #include "trains.h"
 
 struct Info {
-    Info(std::string operation_type, int kolvo, std::string type_type) : operation_type(operation_type), kolvo(kolvo),
-                                                                         type_type(type_type) {}
+    Info(std::string operation_type, int quantity, std::string type_type) : operation_type(operation_type),
+                                                                            quantity(quantity),
+                                                                            type_type(type_type) {}
 
     std::string operation_type, type_type;
-    int kolvo;
+    int quantity;
 };
 
 class Station {
 public:
-    Station(const int &number, std::vector<std::pair<int, int>> its_connections) : its_number(number),
-                                                                                   its_connections(its_connections) {}
+    Station(const std::string &name) : name(name) {}
 
     virtual bool progress(Train &, int mode()) = 0;
-
-    int get_distance(const int &to_station) const;
 
     virtual void clear_unloaded() = 0;
 
@@ -35,22 +33,21 @@ public:
             time = 0;
         }
     }
+    std::string get_name()const{return name;}
 
 protected:
     virtual void spawn() = 0;
 
     Station() {}
-
-    // stations\weight
-    std::vector<std::pair<int, int>> its_connections;
-    int time = 0, its_number;
+    std::string name;
+    int time = 0 ;
 };
 
 class Passenger_station : virtual public Station {
 public:
     std::vector<Info> get_delta() override {
-        auto tmp = its_delta;
-        its_delta.clear();
+        auto tmp = delta;
+        delta.clear();
         return tmp;
     }
 
@@ -58,17 +55,17 @@ public:
         unloaded.clear();
     }
 
-    Passenger_station(const int &number, std::vector<std::pair<int, int>> its_connections,
-                      std::vector<Passenger> to_spawn) : Station(number, its_connections), to_spawn(to_spawn) {}
+    Passenger_station(const std::string &number,
+                      std::vector<Passenger> to_spawn) : Station(number), to_spawn(to_spawn) {}
 
     bool progress(Train &, int mode()) override;
 
 
 protected:
 
-    void load_passanger(Train &to_process);
+    void load_passenger(Train &to_process);
 
-    void unload_passanger(Train &to_process);
+    void unload_passenger(Train &to_process);
 
     void spawn() override {
         to_load.insert(to_load.end(), to_spawn.begin(), to_spawn.end());
@@ -76,7 +73,7 @@ protected:
 
     Passenger_station(std::vector<Passenger> to_spawn) : to_spawn(to_spawn) {}
 
-    std::vector<Info> its_delta;
+    std::vector<Info> delta;
 
     std::vector<Passenger> to_load, to_spawn, unloaded;
 };
@@ -85,8 +82,8 @@ class Cargo_station : virtual public Station {
 public:
 
     std::vector<Info> get_delta() override {
-        auto tmp = its_delta;
-        its_delta.clear();
+        auto tmp = delta;
+        delta.clear();
         return tmp;
     }
 
@@ -94,15 +91,15 @@ public:
         unloaded.clear();
     }
 
-    Cargo_station(const int &number, std::vector<std::pair<int, int>> its_connections,
-                  const int &type_is_needed, std::vector<Cargo> to_spawn) : Station(number, its_connections),
+    Cargo_station(const std::string &number,
+                  const  std::string &type_is_needed, std::vector<Cargo> to_spawn) : Station(number),
                                                                             to_spawn(to_spawn),
                                                                             type_is_needed(type_is_needed) {}
 
     bool progress(Train &, int mode()) override;
 
 protected:
-    Cargo_station(std::vector<Cargo> to_spawn, const int &type_is_needed) : to_spawn(to_spawn),
+    Cargo_station(std::vector<Cargo> to_spawn, const std::string &type_is_needed) : to_spawn(to_spawn),
                                                                             type_is_needed(type_is_needed) {}
 
     void load_cargo(Train &to_process);
@@ -114,18 +111,18 @@ protected:
     }
 
     std::vector<Cargo> to_load, to_spawn, unloaded;
-    std::vector<Info> its_delta;
-    int type_is_needed;
+    std::vector<Info> delta;
+    std::string type_is_needed;
 };
 
 class Passenger_and_Cargo_station : public Cargo_station, public Passenger_station {
 public:
 
     std::vector<Info> get_delta() override {
-        auto tmp = Passenger_station::its_delta;
-        Passenger_station   ::its_delta.clear();
-        tmp.insert(tmp.end(), Cargo_station::its_delta.begin(), Cargo_station::its_delta.end());
-        Cargo_station::its_delta.clear();
+        auto tmp = Passenger_station::delta;
+        Passenger_station::delta.clear();
+        tmp.insert(tmp.end(), Cargo_station::delta.begin(), Cargo_station::delta.end());
+        Cargo_station::delta.clear();
         return tmp;
     }
 
@@ -134,15 +131,14 @@ public:
         Cargo_station::unloaded.clear();
     }
 
-    Passenger_and_Cargo_station(const int &number, std::vector<std::pair<int, int>> its_connections,
-                                std::vector<Passenger> to_spawn_passanger,
-                                const int &type_is_neeeded, std::vector<Cargo> to_spawn_cargo) : Station(number,
-                                                                                                         its_connections),
-                                                                                                 Passenger_station(
-                                                                                                         to_spawn_passanger),
-                                                                                                 Cargo_station(
-                                                                                                         to_spawn_cargo,
-                                                                                                         type_is_neeeded) {}
+    Passenger_and_Cargo_station(const std::string &number,
+                                std::vector<Passenger> to_spawn_passenger,
+                                const  std::string &type_is_needed, std::vector<Cargo> to_spawn_cargo) : Station(number),
+                                                                                                Passenger_station(
+                                                                                                        to_spawn_passenger),
+                                                                                                Cargo_station(
+                                                                                                        to_spawn_cargo,
+                                                                                                        type_is_needed) {}
 
     bool progress(Train &, int mode()) override;
 

@@ -129,18 +129,44 @@ CMakeFiles/sem3_lab3_ppvis.dir/classes/game_field.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sem3_lab3_ppvis.dir/classes/game_field.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/game_field.cpp -o CMakeFiles/sem3_lab3_ppvis.dir/classes/game_field.cpp.s
 
-CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.o: CMakeFiles/sem3_lab3_ppvis.dir/flags.make
-CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.o: ../classes/loader_and_checker.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/inejka/CLionProjects/sem3_lab3_ppvis/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.o -c /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/loader_and_checker.cpp
+CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.o: CMakeFiles/sem3_lab3_ppvis.dir/flags.make
+CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.o: ../classes/Loader.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/inejka/CLionProjects/sem3_lab3_ppvis/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.o -c /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Loader.cpp
 
-CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/loader_and_checker.cpp > CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.i
+CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Loader.cpp > CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.i
 
-CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/loader_and_checker.cpp -o CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.s
+CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Loader.cpp -o CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.s
+
+CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.o: CMakeFiles/sem3_lab3_ppvis.dir/flags.make
+CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.o: ../classes/Checker.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/inejka/CLionProjects/sem3_lab3_ppvis/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.o -c /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Checker.cpp
+
+CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Checker.cpp > CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.i
+
+CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Checker.cpp -o CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.s
+
+CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.o: CMakeFiles/sem3_lab3_ppvis.dir/flags.make
+CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.o: ../classes/Error.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/inejka/CLionProjects/sem3_lab3_ppvis/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.o -c /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Error.cpp
+
+CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Error.cpp > CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.i
+
+CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Error.cpp -o CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.s
 
 # Object files for target sem3_lab3_ppvis
 sem3_lab3_ppvis_OBJECTS = \
@@ -148,7 +174,9 @@ sem3_lab3_ppvis_OBJECTS = \
 "CMakeFiles/sem3_lab3_ppvis.dir/classes/trains.cpp.o" \
 "CMakeFiles/sem3_lab3_ppvis.dir/classes/stations.cpp.o" \
 "CMakeFiles/sem3_lab3_ppvis.dir/classes/game_field.cpp.o" \
-"CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.o"
+"CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.o" \
+"CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.o" \
+"CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.o"
 
 # External object files for target sem3_lab3_ppvis
 sem3_lab3_ppvis_EXTERNAL_OBJECTS =
@@ -157,10 +185,12 @@ sem3_lab3_ppvis: CMakeFiles/sem3_lab3_ppvis.dir/main.cpp.o
 sem3_lab3_ppvis: CMakeFiles/sem3_lab3_ppvis.dir/classes/trains.cpp.o
 sem3_lab3_ppvis: CMakeFiles/sem3_lab3_ppvis.dir/classes/stations.cpp.o
 sem3_lab3_ppvis: CMakeFiles/sem3_lab3_ppvis.dir/classes/game_field.cpp.o
-sem3_lab3_ppvis: CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.o
+sem3_lab3_ppvis: CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.o
+sem3_lab3_ppvis: CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.o
+sem3_lab3_ppvis: CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.o
 sem3_lab3_ppvis: CMakeFiles/sem3_lab3_ppvis.dir/build.make
 sem3_lab3_ppvis: CMakeFiles/sem3_lab3_ppvis.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/inejka/CLionProjects/sem3_lab3_ppvis/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable sem3_lab3_ppvis"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/inejka/CLionProjects/sem3_lab3_ppvis/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable sem3_lab3_ppvis"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sem3_lab3_ppvis.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

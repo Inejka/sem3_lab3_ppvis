@@ -5,7 +5,7 @@
 #include "game_field.h"
 #include <iostream>
 
-int passive_mode(){
+int passive_mode() {
     return 2;
 }
 
@@ -18,24 +18,20 @@ int active_mode() {
 
 void Game_field::simulate() {
     int (*choice)();
-    if(its_mode)choice=passive_mode;else choice=active_mode;
-    for (int i = 0; i < its_trains.size(); i++) {
-        if (its_trains[i].if_on_station()) {
-            if (its_stations[its_trains[i].get_current_station()]->progress(its_trains[i],
-                                                                            choice)) {
-                auto j = its_stations[its_trains[i].get_current_station()]->get_delta();
-                for (auto &i : j)
-                    std::cout << i.operation_type << i.kolvo << i.type_type;
+    if (mode)choice = passive_mode; else choice = active_mode;
+    for (int i = 0; i < trains.size(); i++) {
+        if (trains[i].if_on_station()) {
+            if (stations[trains[i].get_current_station()]->progress(trains[i],
+                                                                    choice)) {
+                auto j = stations[trains[i].get_current_station()]->get_delta();
+                log.insert(log.end(),j.begin(),j.end());
             }
-        } else if (!its_trains[i].move(
-                its_stations[its_trains[i].get_current_station()]->get_distance(
-                        its_trains[i].get_next_station()))) {
-            its_trains.erase(its_trains.begin() + i);
-        } else if (its_trains[i].if_on_station()) {
-            std::cout << "Train number " << its_trains[i].get_its_number() << " has arrived to " << its_trains[i].get_current_station()
-                      << " station\n";
+        } else if (!trains[i].move(connections[{trains[i].get_current_station(), trains[i].get_next_station()}])) {
+            alive_trains[i]= false;
+        } else if (trains[i].if_on_station()) {
+            log.push_back(Info("Train number ",i," has arrived to " + trains[i].get_current_station() +" station\n"));
         }
     }
-    for (auto &i : its_stations)
-        i->progress_to_spawn();
+    for (auto &i : stations)
+        i.second->progress_to_spawn();
 }

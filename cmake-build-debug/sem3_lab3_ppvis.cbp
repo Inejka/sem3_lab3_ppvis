@@ -82,16 +82,28 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Checker.cpp">
+			<Option target="sem3_lab3_ppvis"/>
+		</Unit>
+		<Unit filename="/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Checker.h">
+			<Option target="sem3_lab3_ppvis"/>
+		</Unit>
+		<Unit filename="/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Error.cpp">
+			<Option target="sem3_lab3_ppvis"/>
+		</Unit>
+		<Unit filename="/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Error.h">
+			<Option target="sem3_lab3_ppvis"/>
+		</Unit>
+		<Unit filename="/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Loader.cpp">
+			<Option target="sem3_lab3_ppvis"/>
+		</Unit>
+		<Unit filename="/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Loader.h">
+			<Option target="sem3_lab3_ppvis"/>
+		</Unit>
 		<Unit filename="/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/game_field.cpp">
 			<Option target="sem3_lab3_ppvis"/>
 		</Unit>
 		<Unit filename="/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/game_field.h">
-			<Option target="sem3_lab3_ppvis"/>
-		</Unit>
-		<Unit filename="/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/loader_and_checker.cpp">
-			<Option target="sem3_lab3_ppvis"/>
-		</Unit>
-		<Unit filename="/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/loader_and_checker.h">
 			<Option target="sem3_lab3_ppvis"/>
 		</Unit>
 		<Unit filename="/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/stations.cpp">

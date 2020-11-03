@@ -10,46 +10,45 @@
 
 class Entity_with_weight {
 public:
-    virtual int get_its_weight() const = 0;
+    virtual int get_weight() const = 0;
 
-    void set_its_weight(const int &to_set) { its_weight = to_set; }
+    void set_weight(const int &to_set) { weight = to_set; }
 
 protected:
-    int its_weight = 0;
+    int weight = 0;
 };
 
 class Passenger : public Entity_with_weight {
 public:
-    Passenger(std::string name, int destination_point, int weight) : its_name(name), its_destination_point(
-            destination_point) { set_its_weight(weight); }
+    Passenger(std::string name, std::string destination_point, int weight) : name(name), destination_point(
+            destination_point) { set_weight(weight); }
 
-    bool check_destination_point(const int &to_check) const { return its_destination_point == to_check; }
+    bool check_destination_point(const std::string &to_check) const { return destination_point == to_check; }
 
-    int get_its_destination_point() const { return its_destination_point; }
+    std::string get_destination_point() const { return destination_point; }
 
-    int get_its_weight() const override { return its_weight; }
+    int get_weight() const override { return weight; }
 
 private:
-    std::string its_name;
-    int its_destination_point;
+    std::string name,destination_point;
 };
 
 class Cargo : public Entity_with_weight {
 public:
-    Cargo(int type, int weight) : its_type(type) { set_its_weight(weight); }
+    Cargo(std::string type, int weight) : type(type) { set_weight(weight); }
 
-    bool check_type(const int &to_check) const { return to_check == its_type; }
+    bool check_type(const std::string &to_check) const { return to_check == type; }
 
-    int get_its_weight() const override { return its_weight; }
+    int get_weight() const override { return weight; }
 
 private:
-    int its_type;
+    std::string type;
 };
 
 class Locomotive : Entity_with_weight {
 public:
     Locomotive(int pulling_force, int life_time) : pulling_force(pulling_force),
-                                                       life_time(life_time) { its_weight = 1500; }
+                                                       life_time(life_time) { weight = 1500; }
 
     int get_pulling_force() const { return pulling_force; }
 
@@ -59,7 +58,7 @@ public:
         return true;
     }
 
-    int get_its_weight() const override { return its_weight; }
+    int get_weight() const override { return weight; }
 
 private:
     int pulling_force, life_time;
@@ -67,88 +66,87 @@ private:
 
 class Base_wagon : public Entity_with_weight {
 public:
-    Base_wagon(const int &weight) { set_its_weight(weight); }
+    Base_wagon(const int &weight) { set_weight(weight); }
 
-    virtual std::string get_its_type() = 0;
+    virtual std::string get_type() = 0;
 
-    int get_its_weight() const override {
-        return its_weight;
+    int get_weight() const override {
+        return weight;
     }
 };
 
 template<class T1>
 class Wagon : public Base_wagon {
 public:
-    Wagon(const int &max_capacity, std::string its_type, const int &weight) : Base_wagon(weight),
+    Wagon(const int &max_capacity, std::string type, const int &weight) : Base_wagon(weight),
                                                                               max_capacity(max_capacity),
-                                                                              its_type(its_type) {}
+                                                                              type(type) {}
 
     bool add(const T1 &to_add);
 
     void load(std::vector<T1> &to_load);
 
-    virtual std::vector<T1> unload(const int &par);
+    virtual std::vector<T1> unload(const std::string &par);
 
-    std::string get_its_type() override {
-        return its_type;
+    std::string get_type() override {
+        return type;
     }
 
 protected:
-    virtual bool unload_decision(const T1 &make_decision_about, const int &par) = 0;
+    virtual bool unload_decision(const T1 &make_decision_about, const std::string &par) = 0;
 
     const std::vector<T1> get_list_for_weight() const { return list; }
 
 private:
     int max_capacity;
     std::vector<T1> list;
-    std::string its_type;
+    std::string type;
 
 };
 
 
 class Passenger_wagon : public Wagon<Passenger> {
 public:
-    Passenger_wagon() : Wagon(60, "Passanger_wagon", 4000) {}
+    Passenger_wagon() : Wagon(60, "Passenger_wagon", 4000) {}
 
-    int get_its_weight() const override;
+    int get_weight() const override;
 
 protected:
-    bool unload_decision(const Passenger &make_decision_about, const int &par) override;
+    bool unload_decision(const Passenger &make_decision_about, const std::string &par) override;
 };
 
 class Freight_wagon : public Wagon<Cargo> {
 public:
     Freight_wagon() : Wagon(500, "Cargo_wagon", 2500) {}
 
-    int get_its_weight() const override;
+    int get_weight() const override;
 
 protected:
-    bool unload_decision(const Cargo &make_decision_about, const int &par) override;
+    bool unload_decision(const Cargo &make_decision_about, const std::string &par) override;
 };
 
 class Train : Entity_with_weight {
 public:
     Train(int locomotive_lifetime, int locomotive_pulling_force, int freight_wagons_count,
-          int passenger_wagons_count, std::vector<int> its_route, const int &its_number) : its_route(its_route),
-                                                                    its_locomotive(locomotive_pulling_force,
-                                                                                   locomotive_lifetime),its_number(its_number) {
+          int passenger_wagons_count, std::vector<std::string> route) : route(route),
+                                                                    locomotive(locomotive_pulling_force,
+                                                                                   locomotive_lifetime) {
         for (int i = 0; i < freight_wagons_count; i++)
-            its_wagons.push_back(new Freight_wagon);
+            wagons.push_back(new Freight_wagon);
         for (int i = 0; i < passenger_wagons_count; i++)
-            its_wagons.push_back(new Passenger_wagon);
+            wagons.push_back(new Passenger_wagon);
     }
 
-    int get_its_number()const{return its_number;}
 
-    void load_passangers(std::vector<Passenger> &passagers);
+    void load_passengers(std::vector<Passenger> &passengers);
 
     void load_cargo(std::vector<Cargo> &Cargo);
 
-    std::vector<Passenger> unload_passangers_by_their_dest_point(const int &current_station);
+    std::vector<Passenger> unload_passengers_by_their_dest_point();
 
-    std::vector<Cargo> unload_cargo_by_type(const int &type);
+    std::vector<Cargo> unload_cargo_by_type(const std::string &type);
 
-    int get_its_weight() const override;
+    int get_weight() const override;
 
     bool move(const int &distance);
 
@@ -156,19 +154,19 @@ public:
 
     void make_move() { is_on_station = false; }
 
-    int get_next_station() const;
+    std::string get_next_station() const;
 
-    int get_current_station() const { return its_route[current_position_on_its_route]; }
+    std::string get_current_station() const { return route[current_position_on_route]; }
 
     float progress = 0;
 
-    const std::vector<int>get_its_route(){return its_route;}
+    const std::vector<std::string>get_route(){return route;}
 private:
-    Locomotive its_locomotive;
-    std::vector<Base_wagon *> its_wagons;
+    Locomotive locomotive;
+    std::vector<Base_wagon *> wagons;
     bool is_on_station = true;
-    std::vector<int> its_route;
-    int current_position_on_its_route = 0 , its_number;
+    std::vector<std::string> route;
+    int current_position_on_route = 0;
 
 };
 

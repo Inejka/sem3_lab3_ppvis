@@ -143,6 +143,87 @@ sem3_lab3_ppvis/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sem3_lab3_ppvis.dir/build.make CMakeFiles/sem3_lab3_ppvis.dir/build
 .PHONY : sem3_lab3_ppvis/fast
 
+classes/Checker.o: classes/Checker.cpp.o
+
+.PHONY : classes/Checker.o
+
+# target to build an object file
+classes/Checker.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sem3_lab3_ppvis.dir/build.make CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.o
+.PHONY : classes/Checker.cpp.o
+
+classes/Checker.i: classes/Checker.cpp.i
+
+.PHONY : classes/Checker.i
+
+# target to preprocess a source file
+classes/Checker.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sem3_lab3_ppvis.dir/build.make CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.i
+.PHONY : classes/Checker.cpp.i
+
+classes/Checker.s: classes/Checker.cpp.s
+
+.PHONY : classes/Checker.s
+
+# target to generate assembly for a file
+classes/Checker.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sem3_lab3_ppvis.dir/build.make CMakeFiles/sem3_lab3_ppvis.dir/classes/Checker.cpp.s
+.PHONY : classes/Checker.cpp.s
+
+classes/Error.o: classes/Error.cpp.o
+
+.PHONY : classes/Error.o
+
+# target to build an object file
+classes/Error.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sem3_lab3_ppvis.dir/build.make CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.o
+.PHONY : classes/Error.cpp.o
+
+classes/Error.i: classes/Error.cpp.i
+
+.PHONY : classes/Error.i
+
+# target to preprocess a source file
+classes/Error.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sem3_lab3_ppvis.dir/build.make CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.i
+.PHONY : classes/Error.cpp.i
+
+classes/Error.s: classes/Error.cpp.s
+
+.PHONY : classes/Error.s
+
+# target to generate assembly for a file
+classes/Error.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sem3_lab3_ppvis.dir/build.make CMakeFiles/sem3_lab3_ppvis.dir/classes/Error.cpp.s
+.PHONY : classes/Error.cpp.s
+
+classes/Loader.o: classes/Loader.cpp.o
+
+.PHONY : classes/Loader.o
+
+# target to build an object file
+classes/Loader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sem3_lab3_ppvis.dir/build.make CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.o
+.PHONY : classes/Loader.cpp.o
+
+classes/Loader.i: classes/Loader.cpp.i
+
+.PHONY : classes/Loader.i
+
+# target to preprocess a source file
+classes/Loader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sem3_lab3_ppvis.dir/build.make CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.i
+.PHONY : classes/Loader.cpp.i
+
+classes/Loader.s: classes/Loader.cpp.s
+
+.PHONY : classes/Loader.s
+
+# target to generate assembly for a file
+classes/Loader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sem3_lab3_ppvis.dir/build.make CMakeFiles/sem3_lab3_ppvis.dir/classes/Loader.cpp.s
+.PHONY : classes/Loader.cpp.s
+
 classes/game_field.o: classes/game_field.cpp.o
 
 .PHONY : classes/game_field.o
@@ -169,33 +250,6 @@ classes/game_field.s: classes/game_field.cpp.s
 classes/game_field.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sem3_lab3_ppvis.dir/build.make CMakeFiles/sem3_lab3_ppvis.dir/classes/game_field.cpp.s
 .PHONY : classes/game_field.cpp.s
-
-classes/loader_and_checker.o: classes/loader_and_checker.cpp.o
-
-.PHONY : classes/loader_and_checker.o
-
-# target to build an object file
-classes/loader_and_checker.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sem3_lab3_ppvis.dir/build.make CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.o
-.PHONY : classes/loader_and_checker.cpp.o
-
-classes/loader_and_checker.i: classes/loader_and_checker.cpp.i
-
-.PHONY : classes/loader_and_checker.i
-
-# target to preprocess a source file
-classes/loader_and_checker.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sem3_lab3_ppvis.dir/build.make CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.i
-.PHONY : classes/loader_and_checker.cpp.i
-
-classes/loader_and_checker.s: classes/loader_and_checker.cpp.s
-
-.PHONY : classes/loader_and_checker.s
-
-# target to generate assembly for a file
-classes/loader_and_checker.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sem3_lab3_ppvis.dir/build.make CMakeFiles/sem3_lab3_ppvis.dir/classes/loader_and_checker.cpp.s
-.PHONY : classes/loader_and_checker.cpp.s
 
 classes/stations.o: classes/stations.cpp.o
 
@@ -287,12 +341,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... sem3_lab3_ppvis"
+	@echo "... classes/Checker.o"
+	@echo "... classes/Checker.i"
+	@echo "... classes/Checker.s"
+	@echo "... classes/Error.o"
+	@echo "... classes/Error.i"
+	@echo "... classes/Error.s"
+	@echo "... classes/Loader.o"
+	@echo "... classes/Loader.i"
+	@echo "... classes/Loader.s"
 	@echo "... classes/game_field.o"
 	@echo "... classes/game_field.i"
 	@echo "... classes/game_field.s"
-	@echo "... classes/loader_and_checker.o"
-	@echo "... classes/loader_and_checker.i"
-	@echo "... classes/loader_and_checker.s"
 	@echo "... classes/stations.o"
 	@echo "... classes/stations.i"
 	@echo "... classes/stations.s"

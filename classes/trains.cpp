@@ -30,7 +30,7 @@ void Wagon<T1>::load(std::vector<T1> &to_load) {
 }
 
 template<class T1>
-std::vector<T1> Wagon<T1>::unload(const int &par) {
+std::vector<T1> Wagon<T1>::unload(const std::string &par) {
     std::vector<T1> to_return;
     for (int i = 0; i < list.size(); i++)
         if (unload_decision(list[i], par)) {
@@ -41,59 +41,59 @@ std::vector<T1> Wagon<T1>::unload(const int &par) {
     return to_return;
 }
 
-bool Passenger_wagon::unload_decision(const Passenger &make_decision_about, const int &par) {
+bool Passenger_wagon::unload_decision(const Passenger &make_decision_about, const std::string &par) {
     return make_decision_about.check_destination_point(par);
 }
 
-int Passenger_wagon::get_its_weight() const {
-    int to_return = Base_wagon::get_its_weight();
+int Passenger_wagon::get_weight() const {
+    int to_return = Base_wagon::get_weight();
     for (auto &i:get_list_for_weight())
-        to_return += i.get_its_weight();
+        to_return += i.get_weight();
     return to_return;
 }
 
-int Freight_wagon::get_its_weight() const {
-    int to_return = Base_wagon::get_its_weight();
+int Freight_wagon::get_weight() const {
+    int to_return = Base_wagon::get_weight();
     for (auto &i:get_list_for_weight())
-        to_return += i.get_its_weight();
+        to_return += i.get_weight();
     return to_return;
 }
 
-bool Freight_wagon::unload_decision(const Cargo &make_decision_about, const int &par) {
+bool Freight_wagon::unload_decision(const Cargo &make_decision_about, const std::string &par) {
     return make_decision_about.check_type(par);
 }
 
-void Train::load_passangers(std::vector<Passenger> &passagers) {
-    for (auto &i : its_wagons) {
+void Train::load_passengers(std::vector<Passenger> &passengers) {
+    for (auto &i : wagons) {
         Passenger_wagon *p_w_p = dynamic_cast<Passenger_wagon *>(i);
-        if (p_w_p)p_w_p->load(passagers);
-        if (passagers.empty())break;;
+        if (p_w_p)p_w_p->load(passengers);
+        if (passengers.empty())break;;
     }
 }
 
 void Train::load_cargo(std::vector<Cargo> &cargo) {
-    for (auto &i:its_wagons) {
+    for (auto &i:wagons) {
         Freight_wagon *f_w_p = dynamic_cast<Freight_wagon *>(i);
         if (f_w_p)f_w_p->load(cargo);
         if (cargo.empty())break;
     }
 }
 
-std::vector<Passenger> Train::unload_passangers_by_their_dest_point(const int &current_station) {
+std::vector<Passenger> Train::unload_passengers_by_their_dest_point() {
     std::vector<Passenger> tmp;
-    for (auto &i:its_wagons) {
+    for (auto &i:wagons) {
         Passenger_wagon *p_w_p = dynamic_cast<Passenger_wagon *>(i);
         if (p_w_p) {
-            auto tmp1 = p_w_p->unload(current_station);
+            auto tmp1 = p_w_p->unload(route[current_position_on_route]);
             tmp.insert(tmp.end(), tmp1.begin(), tmp1.end());
         }
     }
     return tmp;
 }
 
-std::vector<Cargo> Train::unload_cargo_by_type(const int &type) {
+std::vector<Cargo> Train::unload_cargo_by_type(const std::string &type) {
     std::vector<Cargo> tmp;
-    for (auto &i:its_wagons) {
+    for (auto &i:wagons) {
         Freight_wagon *f_w_p = dynamic_cast<Freight_wagon *>(i);
         if (f_w_p) {
             auto tmp1 = f_w_p->unload(type);
@@ -103,31 +103,31 @@ std::vector<Cargo> Train::unload_cargo_by_type(const int &type) {
     return tmp;
 }
 
-int Train::get_its_weight() const {
-    int to_return = its_weight;
-    for (auto &i:its_wagons)
-        to_return += i->get_its_weight();
+int Train::get_weight() const {
+    int to_return = weight;
+    for (auto &i:wagons)
+        to_return += i->get_weight();
     return to_return;
 }
 
 bool Train::move(const int &distance) {
-    if (its_locomotive.create_pulling_force()) {
-        float km = (its_locomotive.get_pulling_force() - get_its_weight() / 100);
+    if (locomotive.create_pulling_force()) {
+        float km = (locomotive.get_pulling_force() - get_weight() / 100);
         if (km > 0)
             progress += km / distance * 100;
         //std::cout<<distance << ' ' << progress  << ' ' << km << "\n";
         if (progress > 100) {
             progress = 0 ;
             is_on_station = true;
-            current_position_on_its_route = (current_position_on_its_route + 1) % its_route.size();
+            current_position_on_route = (current_position_on_route + 1) % route.size();
         }
         return true;
     }
     return false;
 }
 
-int Train::get_next_station() const {
-    if (current_position_on_its_route != its_route.size()-1)
-        return its_route[current_position_on_its_route + 1];
-    else return its_route[0];
+std::string Train::get_next_station() const {
+    if (current_position_on_route != route.size()-1)
+        return route[current_position_on_route + 1];
+    else return route[0];
 }

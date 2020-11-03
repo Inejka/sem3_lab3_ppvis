@@ -6,23 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/game_field.cpp
-game_field.h
-/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/game_field.h
-iostream
--
-
-/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/game_field.h
-stations.h
-/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/stations.h
-iostream
--
-
-/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/loader_and_checker.cpp
-loader_and_checker.h
-/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/loader_and_checker.h
-
-/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/loader_and_checker.h
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Checker.h
 game_field.h
 /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/game_field.h
 iostream
@@ -34,21 +18,43 @@ fstream
 string
 -
 
-/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/stations.cpp
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Error.h
+string
+-
+iostream
+-
+
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Loader.cpp
+Loader.h
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Loader.h
+Error.h
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Error.h
+
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Loader.h
+game_field.h
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/game_field.h
+iostream
+-
+stations.h
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/stations.h
+fstream
+-
+string
+-
+Error.h
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Error.h
+
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/game_field.h
 stations.h
 /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/stations.h
 iostream
 -
+map
+-
 
 /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/stations.h
 trains.h
 /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/trains.h
-
-/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/trains.cpp
-trains.h
-/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/trains.h
-iostream
--
 
 /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/trains.h
 vector
@@ -63,6 +69,10 @@ thread
 -
 classes/game_field.h
 /home/inejka/CLionProjects/sem3_lab3_ppvis/classes/game_field.h
-classes/loader_and_checker.h
-/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/loader_and_checker.h
+classes/Loader.h
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Loader.h
+classes/Checker.h
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Checker.h
+classes/Error.h
+/home/inejka/CLionProjects/sem3_lab3_ppvis/classes/Error.h
 
